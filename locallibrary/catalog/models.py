@@ -72,6 +72,14 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
+
+    
+
     
 import uuid # Required for unique book instances
 
@@ -124,4 +132,11 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
+    
+    def get_date_of_death(self):
+        """Returns the date of death or '-' if not available."""
+        if self.date_of_death is None or self.date_of_death == '':
+            return '-'
+        return self.date_of_death
+    
 
