@@ -12,7 +12,7 @@ class Genre(models.Model):
     name = models.CharField(
         max_length=200,
         unique=True,
-        help_text="Enter a book genre (e.g. Science Fiction, French Poetry etc.)"
+        help_text="Enter a book genre (e.g. Science Fiction, French Poetri etc.)"
     )
 
     def __str__(self):
