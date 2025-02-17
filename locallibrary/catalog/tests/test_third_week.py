@@ -130,7 +130,7 @@ class ThirdWeekTests(TestCase):
     def test_challenge_part9_two(self):
         u  = User.objects.get(username=user)
         u.is_staff = True
-        permission = Permission.objects.get(codename='can_mark_returned')
+        permission = Permission.objects.get(codename='add_book')
         u.user_permissions.add(permission)
         permission = Permission.objects.get(codename='change_book')
         u.user_permissions.add(permission)
