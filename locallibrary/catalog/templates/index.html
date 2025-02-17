@@ -8,7 +8,7 @@
   </p>
   <h2>Dynamic content</h2>
   <p>The library has the following record counts:</p>
-  <ul>
+  <ul class="frontpage-list">
     <li><strong>Books:</strong> {{ num_books }}</li>
     <li><strong>Copies:</strong> {{ num_instances }}</li>
     <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
@@ -18,7 +18,11 @@
   </ul>
 
   <p>
-    You have visited this page {{num_visits}} time{{nunm_visits|pluralize}}.
+    You have visited this page {{num_visits}} time{{num_visits|pluralize}}.
   </p>
+
+  <hr>
+
+  <p><i><strong>©Page created by: Rafael Romero, Juan José de la Calle</strong></i></p>
 
 {% endblock %}

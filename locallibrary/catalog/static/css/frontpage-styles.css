@@ -1,0 +1,27 @@
+/* Asegura que solo afecta a la lista de la página principal */
+.frontpage-list {
+    list-style-type: none; /* Elimina los puntos predeterminados */
+    padding: 0;
+    margin: 0;
+    counter-reset: item; /* Inicializa el contador */
+}
+
+.frontpage-list li {
+    position: relative; /* Permite la colocación absoluta del número */
+    padding-left: 40px; /* Deja espacio para el número */
+    margin-bottom: 15px; /* Separación entre los elementos */
+}
+
+.frontpage-list li::before {
+    content: counter(item) " "; /* Muestra el número del contador */
+    counter-increment: item; /* Aumenta el contador automáticamente */
+    position: absolute;
+    left: 0; /* Coloca el número a la izquierda */
+    top: 50%;
+    transform: translateY(-50%); /* Centra el número verticalmente */
+    background-color: #eff08f; /* Fondo del recuadro */
+    padding: 2.5px 10px; /* Tamaño del recuadro */
+    /* border: 2px solid #000; Borde del recuadro */
+    border-radius: 5px; /* Bordes redondeados */
+    color: #007bff;
+}
