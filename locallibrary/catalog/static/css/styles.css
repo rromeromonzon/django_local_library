@@ -3,13 +3,54 @@
     padding: 0;
     list-style: none;
   }
-
+ 
   #logout-form {
     display: inline;
   }
   #logout-form button {
-    padding: 0;
+    padding: 10px 20px;            /* Ajusta el tamaño del botón */
     margin: 0;
+    border: none;                  /* Elimina el borde */
+    border-radius: 5px;            /* Bordes redondeados */
+    background-color: #007bff;     /* Color de fondo */
+    color: white;                  /* Color del texto */
+    font-size: 16px;               /* Tamaño de la fuente */
+    cursor: pointer;              /* Cambia el cursor a mano al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
   }
   
+  #logout-form button:hover {
+    background-color: #0056b3;     /* Color de fondo cuando el cursor está encima */
+  }
+
+
+  #login-form {
+    display: inline;
+  }
+  #login-form button {
+    padding: 10px 20px;            /* Ajusta el tamaño del botón */
+    margin: 0;
+    border: none;                  /* Elimina el borde */
+    border-radius: 5px;            /* Bordes redondeados */
+    background-color: #007bff;     /* Color de fondo */
+    color: white;                  /* Color del texto */
+    font-size: 16px;               /* Tamaño de la fuente */
+    cursor: pointer;              /* Cambia el cursor a mano al pasar por encima */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
+  }
+  
+  #login-form button:hover {
+    background-color: #0056b3;     /* Color de fondo cuando el cursor está encima */
+  }
+  
+
+  #logout-form button,
+  #login-form button {
+    text-decoration: none;  /* Elimina el subrayado de los botones */
+  }
+
+  #logout-form a,
+  #login-form a {
+    text-decoration: none;  /* Elimina el subrayado de los enlaces */
+  }
   
