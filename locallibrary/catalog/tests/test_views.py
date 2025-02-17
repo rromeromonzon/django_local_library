@@ -321,22 +321,53 @@ class AuthorCreateViewTest(TestCase):
 
     def setUp(self):
         # Create a user
-        test_user = User.objects.create_user(
+        test_user1 = User.objects.create_user(
             username='test_user', password='some_password')
+        
+        test_user2 = User.objects.create_user(
+            username='test_user2', password='some_password')
 
         content_typeAuthor = ContentType.objects.get_for_model(Author)
         permAddAuthor = Permission.objects.get(
-            codename="add_authors",
+            codename="add_author",
             content_type=content_typeAuthor,
         )
 
-        test_user.user_permissions.add(permAddAuthor)
-        test_user.save()
+        test_user1.user_permissions.add(permAddAuthor)
+        test_user1.save()
+        test_user2.save()
 
-    def test_redirect_if_not_logged_in(self):
-        response = self.client.get(reverse('catalog.add_author'))
-        self.assertRedirects(
-            response, '/accounts/login/?next=/catalog/author/create/')
+        test_author = Author.objects.create(
+            first_name='John', last_name='Smith')
+    
+    def redirect_if_not_logged_in(self):
+        response = self.client.get(reverse('author-create'))
+        self.assertRedirects(response, '/accounts/login/?next=/catalog/author/create/')
+
+    def forbidden_if_no_permission(self):
+        login = self.client.login(username='test_user2', password='some_password')
+        response = self.client.get(reverse('author-create'))
+        self.assertEqual(response.status_code, 403)
+
+    def test_logged_in_with_permission(self):
+        login = self.client.login(username='test_user', password='some_password')
+        response = self.client.get(reverse('author-create'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        login = self.client.login(username='test_user', password='some_password')
+        response = self.client.get(reverse('author-create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'catalog/author_form.html')
+
+    def test_redirects_to_author_detail_on_success(self):
+        login = self.client.login(username='test_user', password='some_password')
+        response = self.client.post(reverse('author-create'), {'first_name': 'John', 'last_name': 'Doe'})
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith('/catalog/author/'))
+    
+
+    
 
 
 
