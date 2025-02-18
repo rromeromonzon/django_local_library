@@ -2,8 +2,6 @@ set -e
 
 pip install -r requirements.txt
 
-rm -rf staticfiles
-
 python3 manage.py makemigrations
 
 python3 manage.py migrate
