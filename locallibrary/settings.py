@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5r*1h#3r^-7e&^841p-x*#b%6o6=_ffx^p*_f!co$+hn+!)%o='
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', ('True')) == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog.apps.CatalogConfig', # This object was created for us in /catalog/apps.py
+    'catalog.apps.CatalogConfig',  # This object was created for us in /catalog/apps.py
 ]
 
 MIDDLEWARE = [
@@ -82,9 +84,19 @@ DATABASES = {
     }
 }
 
-import dj_database_url
 
-db_from_env = dj_database_url.config(default='postgres://alumnodb:alumnodb@localhost:5432/psi', conn_max_age=500)
+POSTGRESQL_URL = os.getenv('POSTGRESQL_URL')
+
+NEON_URL = os.getenv('NEON_URL')
+
+# To run the tests, just export TESTING=1.
+# To use the application, just unset TESTING.
+# To see the current value just type echo $TESTING
+if 'TESTING' in os.environ:
+    db_from_env = dj_database_url.config(default=POSTGRESQL_URL,
+                                         conn_max_age=500)
+else:
+    db_from_env = dj_database_url.config(default=NEON_URL, conn_max_age=500)
 
 DATABASES['default'].update(db_from_env)
 
@@ -135,5 +147,3 @@ LOGIN_REDIRECT_URL = '/'
 
 # Emails
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
